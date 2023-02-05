@@ -1,2 +1,8 @@
+github.com/datadog/mmh3 v0.0.0-20210722141835-012dc69a9e49 h1:9ppqviquwkVpmVM19utHENs1+Ugp4odEBUbFsqP2f/M=
+github.com/datadog/mmh3 v0.0.0-20210722141835-012dc69a9e49/go.mod h1:NoK5OFSzgNJ9DLcHQ3hhbZKeJZioh9B8G59FOAlytYU=
+github.com/roberson-io/mmh3 v0.0.0-20190729202758-fdfce3ba6225 h1:ZMsPCp7oYgjoIFt1c+sM2qojxZXotSYcMF8Ur9/LJlM=
+github.com/roberson-io/mmh3 v0.0.0-20190729202758-fdfce3ba6225/go.mod h1:XEESr+X1SY8ZSuc3jqsTlb3clCkqQJ4DcF3Qxv1N3PM=
+github.com/segmentio/fasthash v1.0.3 h1:EI9+KE1EwvMLBWwjpRDc+fEM+prwxDYbslddQGtrmhM=
+github.com/segmentio/fasthash v1.0.3/go.mod h1:waKX8l2N8yckOgmSsXJi7x1ZfdKZ4x7KRMzBtS3oedY=
 golang.org/x/exp v0.0.0-20230113213754-f9f960f08ad4 h1:CNkDRtCj8otM5CFz5jYvbr8ioXX8flVsLfDWEj0M5kk=
 golang.org/x/exp v0.0.0-20230113213754-f9f960f08ad4/go.mod h1:CxIveKay+FTh1D0yPZemJVgC/95VzuuOLq5Qi4xnoYc=

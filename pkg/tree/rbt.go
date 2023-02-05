@@ -22,6 +22,10 @@ type RedBlackTree[K constraints.Ordered, V any] struct {
 	size int
 }
 
+func (t *RedBlackTree[K, V]) Size() int {
+	return t.size
+}
+
 func (t *RedBlackTree[K, V]) Iterator() Iterator[K, V] {
 	return Iterator[K, V]{t: t, n: nil, p: start}
 }
@@ -60,6 +64,24 @@ func (t *RedBlackTree[K, V]) GetNode(k K) *Node[K, V] {
 		}
 	}
 	return nil
+}
+
+func (t *RedBlackTree[K, V]) Floor(k K) (*Node[K, V], error) {
+	v := t.Iterator()
+	if !v.Next() {
+		return nil, errors.New("no floor found")
+	}
+	c := v.n
+	for v.HasNext() {
+		if !v.Next() {
+			return c, nil
+		}
+		if v.n.key > k {
+			return c, nil
+		}
+		c = v.n
+	}
+	return c, nil
 }
 
 func (t *RedBlackTree[K, V]) Get(k K) (V, error) {
@@ -199,6 +221,14 @@ type Node[K constraints.Ordered, V any] struct {
 	parent *Node[K, V]
 }
 
+func (n *Node[K, V]) Value() V {
+	return n.value
+}
+
+func (n *Node[K, V]) Key() K {
+	return n.key
+}
+
 type Iterator[K constraints.Ordered, V any] struct {
 	t *RedBlackTree[K, V]
 	n *Node[K, V]
@@ -233,6 +263,38 @@ func (i *Iterator[K, V]) Next() bool {
 	}
 	return i.end()
 }
+func (i *Iterator[K, V]) Prev() bool {
+	if i.p == start {
+		return i.start()
+	}
+	if i.p == end {
+		right := i.t.Max()
+		if right == nil {
+			return i.start()
+		}
+		i.n = right
+		return i.it()
+	}
+	if i.n.left != nil {
+		i.n = i.n.left
+		for i.n.right != nil {
+			i.n = i.n.right
+		}
+		return i.it()
+	}
+	for i.n.parent != nil {
+		n := i.n
+		i.n = i.n.parent
+		if n == i.n.right {
+			return i.it()
+		}
+	}
+	return i.start()
+}
+
+func (i *Iterator[K, V]) Node() *Node[K, V] {
+	return i.n
+}
 
 func (i *Iterator[K, V]) HasNext() bool {
 	return i.p != end
@@ -244,6 +306,12 @@ func (i *Iterator[K, V]) Key() K {
 
 func (i *Iterator[K, V]) Value() V {
 	return i.n.value
+}
+
+func (i *Iterator[K, V]) start() bool {
+	i.n = nil
+	i.p = start
+	return false
 }
 
 func (i *Iterator[K, V]) it() bool {
